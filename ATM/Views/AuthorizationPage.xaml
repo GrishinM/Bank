@@ -1,0 +1,28 @@
+﻿<Page x:Class="ATM.Views.AuthorizationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:viewModels="clr-namespace:ATM.ViewModels"
+      xmlns:converters="clr-namespace:ATM.Converters"
+      d:DataContext="{d:DesignInstance viewModels:ATMViewModel}"
+      mc:Ignorable="d"
+      Title="AuthorizationPage">
+    <Page.Resources>
+        <converters:AuthorizationConverter x:Key="AuthorizationConverter" />
+    </Page.Resources>
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="Введите пин-код:" />
+            <TextBox x:Name="PasswordBox" Margin="20" Width="50" MaxLength="4" TextAlignment="Center" />
+            <Button Padding="5" Width="50" Content="Ок" Command="{Binding AuthorizationCommand}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource AuthorizationConverter}">
+                        <Binding Path="CardId" />
+                        <Binding ElementName="PasswordBox" Path="Text" />
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Page>

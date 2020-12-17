@@ -1,0 +1,33 @@
+﻿<Page x:Class="ATM.Views.TransferPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:viewModels="clr-namespace:ATM.ViewModels"
+      xmlns:converters="clr-namespace:ATM.Converters"
+      d:DataContext="{d:DesignInstance viewModels:ATMViewModel}"
+      mc:Ignorable="d"
+      Title="TransferPage">
+    <Page.Resources>
+        <converters:TransferConverter x:Key="TransferConverter" />
+    </Page.Resources>
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock HorizontalAlignment="Center">Введите номер карты получателя:</TextBlock>
+            <TextBox x:Name="CardNumberBox" Margin="20" MaxLength="16" />
+            <TextBlock HorizontalAlignment="Center">Сумма:</TextBlock>
+            <TextBox x:Name="AmountBox" Margin="20" MaxLength="20" />
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <Button Click="BackClick" HorizontalAlignment="Left" Margin="10">Отмена</Button>
+                <Button HorizontalAlignment="Right" Margin="10" Command="{Binding TransferCommand}" Content="Перевести">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource TransferConverter}">
+                            <Binding ElementName="CardNumberBox" Path="Text" />
+                            <Binding ElementName="AmountBox" Path="Text" />
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

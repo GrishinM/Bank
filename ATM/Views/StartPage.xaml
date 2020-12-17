@@ -1,0 +1,36 @@
+﻿<Page x:Class="ATM.Views.StartPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:viewModels="clr-namespace:ATM.ViewModels"
+      d:DataContext="{d:DesignInstance viewModels:ATMViewModel}"
+      mc:Ignorable="d"
+      Title="StartPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ListBox x:Name="CardsBox" ItemsSource="{Binding Cards}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="20">
+                        <Border BorderBrush="Black" BorderThickness="3" CornerRadius="10">
+                            <Rectangle Width="200" Height="100" />
+                        </Border>
+                        <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20" Text="{Binding Number}" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50" FontSize="20" Padding="10" Content="Вставить карту"
+                Command="{Binding InsertCardCommand}" CommandParameter="{Binding ElementName=CardsBox, Path=SelectedItem}"
+                Click="InsertClick" />
+    </Grid>
+</Page>
